@@ -8,5 +8,5 @@ data class ProgressCard(
     val backgroundColor: Color,
     val textColor: Color,
     val percentage: Float,
-    val numberToDisplay: Int
+    val numberToDisplay: String
 )

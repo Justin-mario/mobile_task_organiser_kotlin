@@ -132,7 +132,10 @@ fun ProgressCard(progressCard: ProgressCard, modifier: Modifier = Modifier) {
             .background(progressCard.backgroundColor)
             .padding(8.dp),
        ) {
-            CircularProgressBar(percentage = 0.82f, number = 100)
+            CircularProgressBar(
+                percentage = progressCard.percentage,
+                number = progressCard.numberToDisplay,
+                color = progressCard.textColor)
             Text(
                 text = progressCard.title,
                 style = MaterialTheme.typography.bodySmall,
@@ -151,10 +154,10 @@ fun ProgressCard(progressCard: ProgressCard, modifier: Modifier = Modifier) {
 @Composable
 fun CircularProgressBar(
     percentage: Float,
-    number: Int,
+    number: String,
     fontSize: TextUnit = 10.sp,
     radius: Dp = 50.dp,
-    color: Color = TextWhite,
+    color: Color,
     strokeWidth: Dp = 4.dp,
     animationDuration: Int = 1000,
     animationDelay: Int = 0,
@@ -193,7 +196,7 @@ fun CircularProgressBar(
         }
 
         Text(
-            text = (curPercentage.value * number).toInt().toString(),
+            text = (number),
             color = TextWhite,
             fontSize = fontSize,
             fontWeight = FontWeight.Bold
