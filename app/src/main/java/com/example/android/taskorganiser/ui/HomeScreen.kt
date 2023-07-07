@@ -14,10 +14,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,11 +40,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.sp
 import com.example.android.taskorganiser.R
-import com.example.android.taskorganiser.data.Progress.progress
+import com.example.android.taskorganiser.data.ProfileImageList
+import com.example.android.taskorganiser.data.TaskOrganiserRepository.progress
 import com.example.android.taskorganiser.data.ProgressCard
+import com.example.android.taskorganiser.data.TaskCard
+import com.example.android.taskorganiser.data.TaskOrganiserRepository.taskList
 import com.example.android.taskorganiser.ui.theme.AquaBlue
 import com.example.android.taskorganiser.ui.theme.DeepBlue
 import com.example.android.taskorganiser.ui.theme.TaskOrganiserTheme
@@ -59,6 +62,8 @@ fun HomeScreen() {
         Column {
             GreetingSection()
             ProgressSection(progressList = progress )
+            DateSection()
+            TaskSection(taskCardList = taskList)
         }
 
     }
@@ -74,7 +79,7 @@ fun GreetingSection(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = modifier
                 .fillMaxWidth()
-                .padding(horizontal = 12.dp, vertical = 16.dp)
+                .padding(horizontal = 16.dp, vertical = 16.dp)
         ) {
             Text(
                 text = "Hello, $name!",
@@ -106,7 +111,7 @@ fun ProgressSection(
             text = "Your Progress",
             color = DeepBlue,
             style = MaterialTheme.typography.titleSmall,
-            modifier = Modifier.padding(start = 12.dp, bottom = 12.dp))
+            modifier = Modifier.padding(start = 16.dp, bottom = 12.dp))
 
         LazyRow {
             items(progressList.size) {
@@ -125,7 +130,7 @@ fun ProgressCard(progressCard: ProgressCard, modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.SpaceBetween,
 
         modifier = modifier
-            .padding(start = 12.dp, end = 4.dp, bottom = 16.dp)
+            .padding(start = 16.dp, end = 4.dp, bottom = 16.dp)
             .widthIn(max = 110.dp, min = 100.dp)
             .heightIn(max = 190.dp, min = 170.dp)
             .clip(MaterialTheme.shapes.small)
@@ -205,11 +210,154 @@ fun CircularProgressBar(
 
 }
 
+@Composable
+fun DateSection(modifier: Modifier = Modifier) {
+    Row(verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, end = 16.dp, bottom = 12.dp)) {
+        Text(
+            text = "Wednesday, March 7",
+            color = DeepBlue,
+            style = MaterialTheme.typography.titleSmall)
+
+        Box(modifier = Modifier
+            .size(40.dp)
+            .clip(MaterialTheme.shapes.medium)
+            .background(AquaBlue),
+            contentAlignment = Alignment.Center) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_home),
+                contentDescription = "Calender",
+                modifier = Modifier
+                    .size(30.dp)
+                    .padding(8.dp)
+                    )
+        }
+
+    }
+}
+
+@Composable
+fun TaskSection(taskCardList: List<TaskCard>, modifier: Modifier = Modifier) {
+    LazyColumn(){
+        items(taskCardList.size) {
+            TaskCard(taskCard = taskCardList[it])
+        }
+    }
+}
+
+@Composable
+fun TaskCard(taskCard: TaskCard,modifier: Modifier = Modifier) {
+    Row(verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = modifier
+        .padding(start = 16.dp, end = 12.dp, top = 12.dp)) {
+        Text(
+            text = taskCard.time,
+            color = DeepBlue,
+            fontSize = 8.sp,
+            modifier = Modifier
+                .padding(end = 10.dp)
+                .align(Alignment.Top)
+        )
+        Column(
+            modifier = Modifier
+                .clip(MaterialTheme.shapes.small)
+                .background(taskCard.backgroundColor)
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Text(
+                text = taskCard.heading,
+                color = taskCard.textColor,
+                fontSize = 8.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding()
+            )
+            Text(
+                text = taskCard.sub_heading,
+                color = taskCard.textColor,
+                fontSize = 7.sp,
+                modifier = Modifier.padding()
+            )
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.padding(horizontal = 8.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(20.dp)
+                        .clip(CircleShape)
+                        .padding(8.dp),
+                    contentAlignment = Alignment.BottomStart
+                ) {
+
+                            ProfilePicturesCard(taskCard.imageList)
+
+
+                    }
+//                taskCard.imageList.forEach {image ->
+//                    Image(
+//                        painter = painterResource(id = image),
+//                        contentDescription = "profile picture",)
+////                        modifier = Modifier
+////                            .size(20.dp)
+////                            .clip(CircleShape),
+////                    contentScale = ContentScale.FillBounds)
+//                }
+                }
+                Text(
+                    text = taskCard.taskTime,
+                    color = taskCard.textColor,
+                    fontSize = 7.sp
+                )
+
+            }
+        }
+    }
+
+
+@Composable
+fun ProfilePicturesCard(profileImageList: ProfileImageList, modifier: Modifier = Modifier) {
+    Row {
+        Box(
+            modifier = modifier
+                .size(20.dp)
+                .clip(CircleShape)
+                .padding(8.dp),
+            contentAlignment = Alignment.BottomStart
+        ) {
+            profileImageList.imageList.forEach {image ->
+                Image(
+                    painter = painterResource(id = image),
+                    contentDescription = "profile picture",
+                    modifier = Modifier
+                        .size(20.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.FillBounds)
+            }
+
+        }
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
     TaskOrganiserTheme {
         HomeScreen()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ProfileScreenPreview() {
+    TaskOrganiserTheme {
+
     }
 }
