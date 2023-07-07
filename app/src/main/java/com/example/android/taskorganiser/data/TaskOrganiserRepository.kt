@@ -1,7 +1,6 @@
 package com.example.android.taskorganiser.data
 
 
-import androidx.compose.ui.graphics.Color
 import com.example.android.taskorganiser.R
 import com.example.android.taskorganiser.ui.theme.AquaBlue
 import com.example.android.taskorganiser.ui.theme.Beige1
@@ -9,6 +8,7 @@ import com.example.android.taskorganiser.ui.theme.DeepBlue
 import com.example.android.taskorganiser.ui.theme.LightRed
 import com.example.android.taskorganiser.ui.theme.OrangeYellow2
 import com.example.android.taskorganiser.ui.theme.PurpleGrey80
+import com.example.android.taskorganiser.ui.theme.md_theme_dark_onError
 import com.example.android.taskorganiser.ui.theme.md_theme_dark_onSurface
 
 
@@ -47,7 +47,7 @@ object TaskOrganiserRepository {
             "Flose Real Estate Project",
             "9:50 AM - 10:50 AM",
             Beige1,
-            Color.Red,
+            md_theme_dark_onError,
                 listOf(
                     R.drawable.usman_yousaf_yiovigqmjj4_unsplash,
                     R.drawable.gift_habeshaw_kbv5den3qty_unsplash,
@@ -71,18 +71,32 @@ object TaskOrganiserRepository {
     ),
 
         TaskCard(
-            "12:00 AM",
+            "12:00 PM",
             "Meeting with Management",
             "Board Meeting",
             "12:10 PM - 1:50 PM",
             Beige1,
-            Color.Red,
+            md_theme_dark_onError,
                 listOf(
                     R.drawable.usman_yousaf_yiovigqmjj4_unsplash,
                     R.drawable.gift_habeshaw_kbv5den3qty_unsplash,
                     R.drawable.omid_armin_65jdpsttl_0_unsplash,
                     R.drawable.rita_malcok_oohtxx5mjqi_unsplash
                 )
+        ),
+        TaskCard(
+            "2:00 PM",
+            "Internal marketing session",
+            "Marketing Department",
+            "2:00 PM - 3:00 PM",
+            AquaBlue,
+            DeepBlue,
+            listOf(
+                R.drawable.sigmund_a19ovaa2rza_unsplash,
+                R.drawable.stefan_stefancik_qxevdflbl8a_unsplash,
+                R.drawable.vicky_hladynets_uyatt9u6avi_unsplash,
+            )
+
         ),
     )
 

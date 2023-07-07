@@ -42,7 +42,6 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.android.taskorganiser.R
-import com.example.android.taskorganiser.data.ProfileImageList
 import com.example.android.taskorganiser.data.TaskOrganiserRepository.progress
 import com.example.android.taskorganiser.data.ProgressCard
 import com.example.android.taskorganiser.data.TaskCard
@@ -257,7 +256,7 @@ fun TaskCard(taskCard: TaskCard,modifier: Modifier = Modifier) {
         Text(
             text = taskCard.time,
             color = DeepBlue,
-            fontSize = 8.sp,
+            style = MaterialTheme.typography.bodySmall,
             modifier = Modifier
                 .padding(end = 10.dp)
                 .align(Alignment.Top)
@@ -267,54 +266,36 @@ fun TaskCard(taskCard: TaskCard,modifier: Modifier = Modifier) {
                 .clip(MaterialTheme.shapes.small)
                 .background(taskCard.backgroundColor)
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(12.dp)
         ) {
             Text(
                 text = taskCard.heading,
                 color = taskCard.textColor,
-                fontSize = 8.sp,
+                fontSize = 10.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding()
             )
             Text(
                 text = taskCard.sub_heading,
                 color = taskCard.textColor,
-                fontSize = 7.sp,
-                modifier = Modifier.padding()
+                fontSize = 9.sp,
+                modifier = Modifier.padding(bottom = 12.dp)
             )
 
-            Row(
+            Row(modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.padding(horizontal = 8.dp)
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Box(
-                    modifier = Modifier
-                        .size(20.dp)
-                        .clip(CircleShape)
-                        .padding(8.dp),
-                    contentAlignment = Alignment.BottomStart
-                ) {
+                ProfilePicturesCard()
 
-                            ProfilePicturesCard(taskCard.imageList)
-
-
-                    }
-//                taskCard.imageList.forEach {image ->
-//                    Image(
-//                        painter = painterResource(id = image),
-//                        contentDescription = "profile picture",)
-////                        modifier = Modifier
-////                            .size(20.dp)
-////                            .clip(CircleShape),
-////                    contentScale = ContentScale.FillBounds)
-//                }
-                }
                 Text(
                     text = taskCard.taskTime,
                     color = taskCard.textColor,
-                    fontSize = 7.sp
+                    fontSize = 8.sp
                 )
+
+                }
+
 
             }
         }
@@ -322,28 +303,52 @@ fun TaskCard(taskCard: TaskCard,modifier: Modifier = Modifier) {
 
 
 @Composable
-fun ProfilePicturesCard(profileImageList: ProfileImageList, modifier: Modifier = Modifier) {
-    Row {
-        Box(
-            modifier = modifier
-                .size(20.dp)
-                .clip(CircleShape)
-                .padding(8.dp),
-            contentAlignment = Alignment.BottomStart
-        ) {
-            profileImageList.imageList.forEach {image ->
-                Image(
-                    painter = painterResource(id = image),
-                    contentDescription = "profile picture",
-                    modifier = Modifier
-                        .size(20.dp)
-                        .clip(CircleShape),
-                    contentScale = ContentScale.FillBounds)
-            }
+fun ProfilePicturesCard( modifier: Modifier = Modifier) {
+    Row() {
 
+
+            Image(
+                painter = painterResource(id = R.drawable.usman_yousaf_yiovigqmjj4_unsplash),
+                contentDescription = "profile picture",
+                modifier = Modifier
+                    .size(15.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.FillBounds
+            )
+
+
+            Image(
+                painter = painterResource(id = R.drawable.gift_habeshaw_kbv5den3qty_unsplash),
+                contentDescription = "profile picture",
+                modifier = Modifier
+                    .size(15.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.FillBounds
+            )
+
+
+
+            Image(
+                painter = painterResource(id = R.drawable.sigmund_a19ovaa2rza_unsplash),
+                contentDescription = "profile picture",
+                modifier = Modifier
+                    .size(15.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.FillBounds
+            )
+
+
+
+            Image(
+                painter = painterResource(id = R.drawable.vicky_hladynets_uyatt9u6avi_unsplash),
+                contentDescription = "profile picture",
+                modifier = Modifier
+                    .size(15.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.FillBounds
+            )
         }
     }
-}
 
 
 @Preview(showBackground = true)
@@ -354,10 +359,3 @@ fun HomeScreenPreview() {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ProfileScreenPreview() {
-    TaskOrganiserTheme {
-
-    }
-}
