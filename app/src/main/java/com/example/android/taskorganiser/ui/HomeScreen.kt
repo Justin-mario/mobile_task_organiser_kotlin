@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -64,7 +65,7 @@ fun HomeScreen() {
         .clip(MaterialTheme.shapes.small)
         .background(TextWhite)) {
         Column {
-            GreetingSection()
+            GreetingSection( name = stringResource(id = R.string.user_name))
             ProgressSection(progressList = progress )
             DateSection()
             TaskSection(taskCardList = taskList)
@@ -77,7 +78,7 @@ fun HomeScreen() {
 @Composable
 fun GreetingSection(
     modifier: Modifier = Modifier,
-    name: String = "Gozie"
+    name: String
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -311,7 +312,7 @@ fun TaskCard(taskCard: TaskCard,modifier: Modifier = Modifier) {
 
 
 @Composable
-fun ProfilePicturesCard( modifier: Modifier = Modifier) {
+fun ProfilePicturesCard() {
     Row() {
 
 
