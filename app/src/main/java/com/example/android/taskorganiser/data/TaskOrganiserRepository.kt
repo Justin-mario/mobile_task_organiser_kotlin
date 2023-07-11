@@ -100,4 +100,17 @@ object TaskOrganiserRepository {
         ),
     )
 
+    val icons = listOf(
+        BottomMenuIcons(R.drawable.ic_baseline_dashboard_24),
+        BottomMenuIcons(R.drawable.baseline_check_box_outline_blank_24),
+        BottomMenuIcons(R.drawable.baseline_event_24),
+        BottomMenuIcons(R.drawable.baseline_forum_24),
+        BottomMenuIcons(R.drawable.baseline_settings_24)
+
+
+
+
+
+    )
+
 }

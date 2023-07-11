@@ -5,6 +5,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,14 +43,18 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.android.taskorganiser.R
+import com.example.android.taskorganiser.data.BottomMenuIcons
 import com.example.android.taskorganiser.data.TaskOrganiserRepository.progress
 import com.example.android.taskorganiser.data.ProgressCard
 import com.example.android.taskorganiser.data.TaskCard
+import com.example.android.taskorganiser.data.TaskOrganiserRepository.icons
 import com.example.android.taskorganiser.data.TaskOrganiserRepository.taskList
 import com.example.android.taskorganiser.ui.theme.AquaBlue
 import com.example.android.taskorganiser.ui.theme.DeepBlue
+import com.example.android.taskorganiser.ui.theme.PurpleGrey40
 import com.example.android.taskorganiser.ui.theme.TaskOrganiserTheme
 import com.example.android.taskorganiser.ui.theme.TextWhite
+import com.example.android.taskorganiser.ui.theme.bottom_Menu_icon_color
 
 @Composable
 fun HomeScreen() {
@@ -64,6 +69,7 @@ fun HomeScreen() {
             DateSection()
             TaskSection(taskCardList = taskList)
         }
+        BottomMenuSection(icons = icons, modifier = Modifier.align(Alignment.BottomCenter))
 
     }
 }
@@ -142,14 +148,15 @@ fun ProgressCard(progressCard: ProgressCard, modifier: Modifier = Modifier) {
                 color = progressCard.textColor)
             Text(
                 text = progressCard.title,
-                style = MaterialTheme.typography.bodySmall,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.SemiBold,
                 color = progressCard.textColor,
                 modifier = Modifier
                 )
 
             Text(
                 text = progressCard.note,
-                fontSize = 8.sp,
+                fontSize = 10.sp,
                 color = progressCard.textColor,
                 )
     }
@@ -227,7 +234,7 @@ fun DateSection(modifier: Modifier = Modifier) {
             .background(AquaBlue),
             contentAlignment = Alignment.Center) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_home),
+                painter = painterResource(id = R.drawable.baseline_event_24),
                 contentDescription = "Calender",
                 modifier = Modifier
                     .size(30.dp)
@@ -239,7 +246,7 @@ fun DateSection(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun TaskSection(taskCardList: List<TaskCard>, modifier: Modifier = Modifier) {
+fun TaskSection(taskCardList: List<TaskCard>) {
     LazyColumn(){
         items(taskCardList.size) {
             TaskCard(taskCard = taskCardList[it])
@@ -252,11 +259,12 @@ fun TaskCard(taskCard: TaskCard,modifier: Modifier = Modifier) {
     Row(verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier
-        .padding(start = 16.dp, end = 12.dp, top = 12.dp)) {
+        .padding(start = 16.dp, end = 12.dp, top = 12.dp, bottom = 8.dp)) {
         Text(
             text = taskCard.time,
             color = DeepBlue,
-            style = MaterialTheme.typography.bodySmall,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.SemiBold,
             modifier = Modifier
                 .padding(end = 10.dp)
                 .align(Alignment.Top)
@@ -271,14 +279,14 @@ fun TaskCard(taskCard: TaskCard,modifier: Modifier = Modifier) {
             Text(
                 text = taskCard.heading,
                 color = taskCard.textColor,
-                fontSize = 10.sp,
-                fontWeight = FontWeight.Bold,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding()
             )
             Text(
                 text = taskCard.sub_heading,
                 color = taskCard.textColor,
-                fontSize = 9.sp,
+                fontSize = 12.sp,
                 modifier = Modifier.padding(bottom = 12.dp)
             )
 
@@ -291,7 +299,7 @@ fun TaskCard(taskCard: TaskCard,modifier: Modifier = Modifier) {
                 Text(
                     text = taskCard.taskTime,
                     color = taskCard.textColor,
-                    fontSize = 8.sp
+                    fontSize = 10.sp
                 )
 
                 }
@@ -349,6 +357,50 @@ fun ProfilePicturesCard( modifier: Modifier = Modifier) {
             )
         }
     }
+
+@Composable
+fun BottomMenuSection(
+    icons: List<BottomMenuIcons>,
+    modifier: Modifier = Modifier) {
+
+  var selectedIconIndex by remember {
+      mutableStateOf(0)
+  }
+   Row(horizontalArrangement = Arrangement.SpaceAround,
+       verticalAlignment = Alignment.CenterVertically,
+       modifier= modifier
+           .fillMaxWidth()
+           .clip(MaterialTheme.shapes.extraLarge)
+           .background(PurpleGrey40)
+           .padding(vertical = 24.dp)) {
+            icons.forEachIndexed { index, icon ->
+                BottomMenu(
+                    icon = icon,
+                    isSelected = index == selectedIconIndex) {
+                    selectedIconIndex = index
+                }
+            }
+   }
+}
+
+@Composable
+fun BottomMenu(  modifier: Modifier = Modifier,
+                 isSelected: Boolean = false,
+                icon: BottomMenuIcons,
+               onIconClicked: () -> Unit,
+) {
+
+    Icon(
+        painter = painterResource(id = icon.bottomMenuIcons),
+        contentDescription = null,
+        tint = if (isSelected) TextWhite else bottom_Menu_icon_color,
+        modifier = modifier
+            .size(20.dp)
+            .clickable { onIconClicked() },
+        )
+
+
+}
 
 
 @Preview(showBackground = true)
